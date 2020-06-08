@@ -113,7 +113,7 @@ var checkForWinner = () => {
   var xMinCount = 0;
   var oMinCount = 0;
   for (let r = 0; r < board.length; r++) {
-    let minIndex = r - board.length - 1;
+    let minIndex = (board.length - 1) - r;
     if (board[r][minIndex] === 'X') {
       xMinCount++;
       // If the counter = 3, game over

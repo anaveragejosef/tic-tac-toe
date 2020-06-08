@@ -13,21 +13,27 @@
         text-align: center;
         padding-top: 15px;
       }
+      .pattern1 {
+        background-color: grey;
+      }
+      .pattern2 {
+        background-color: wheat;
+      }
     </style>
   </head>
   <body>
     <h1 style='text-align: center'>Shall We Play A Game?</h1>
     <button class='restart' onClick='resetGameBoard()'>Ready to Restart?</button>
     <div class='game-board'>
-      <div onClick='addPiece(id)' class='tile' id='topLeft' style='background-color: grey' ></div>
-      <div onClick='addPiece(id)' class='tile' id='midLeft' style='background-color: wheat'></div>
-      <div onClick='addPiece(id)' class='tile' id='botLeft' style='background-color: grey'></div>
-      <div onClick='addPiece(id)' class='tile' id='topCenter' style='background-color: wheat'></div>
-      <div onClick='addPiece(id)' class='tile' id='midCenter' style='background-color: grey'></div>
-      <div onClick='addPiece(id)' class='tile' id='botCenter' style='background-color: wheat'></div>
-      <div onClick='addPiece(id)' class='tile' id='topRight' style='background-color: grey'></div>
-      <div onClick='addPiece(id)' class='tile' id='midRight' style='background-color: wheat'></div>
-      <div onClick='addPiece(id)' class='tile' id='botRight' style='background-color: grey'></div>
+      <div onClick='addPiece(id)' class='tile pattern1' id='topLeft'></div>
+      <div onClick='addPiece(id)' class='tile pattern2' id='midLeft'></div>
+      <div onClick='addPiece(id)' class='tile pattern1' id='botLeft'></div>
+      <div onClick='addPiece(id)' class='tile pattern2' id='topCenter'></div>
+      <div onClick='addPiece(id)' class='tile pattern1' id='midCenter'></div>
+      <div onClick='addPiece(id)' class='tile pattern2' id='botCenter'></div>
+      <div onClick='addPiece(id)' class='tile pattern1' id='topRight'></div>
+      <div onClick='addPiece(id)' class='tile pattern2' id='midRight'></div>
+      <div onClick='addPiece(id)' class='tile pattern1' id='botRight'></div>
     </div>
     <div id='user-alert'></div>
     <script src='app.js'></script>
