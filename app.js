@@ -1,37 +1,39 @@
 // Create variable to track turn
-var turnCounter = {
-  x: true
+var gameState = {
+  xTurnCounter: true,
+  boardSpaces: {
+    topLeft: true,
+    midLeft: true,
+    botLeft: true,
+    topCenter: true,
+    midCenter: true,
+    botCenter: true,
+    topRight: true,
+    midRight: true,
+    botRight: true
+  },
+  scoreboard: {
+    x: 0,
+    o: 0
+  },
+  gameOver: false,
+  winnerSet: false,
+  lastWinner: 'X'
 };
-var boardSpaces = {
-  topLeft: true,
-  midLeft: true,
-  botLeft: true,
-  topCenter: true,
-  midCenter: true,
-  botCenter: true,
-  topRight: true,
-  midRight: true,
-  botRight: true
-}
-var scoreboard = {
-  x: 0,
-  o: 0
-}
-var gameOver = false;
-var lastWinner = 'X';
 
 // Create function that updates tiles
 var addPiece = id => {
   // Check if move is valid
-  if (boardSpaces[id] && !gameOver) {
+  if (gameState.boardSpaces[id] && !gameState.gameOver) {
     // AddPiece then calls PlacePiece
     placePiece(id);
     updateBoardSpace(id);
   }
   var winner = checkForWinner();
-  if (winner) {
+  if (winner && !gameState.winnerSet) {
     updateWinner(winner);
     updateScoreboard(winner);
+    gameState.winnerSet = true;
   } else if (isBoardFull()) {
     updateTie();
   }
@@ -46,40 +48,40 @@ var placePiece = id => {
 
 var calculateTurn = () => {
   // Find who's turn it is, using the obj
-  if (turnCounter.x) {
+  if (gameState.xTurnCounter) {
     var currentTurn = 'X';
   } else {
     var currentTurn = 'O';
   }
   // Switch the state so it will move turns
-  turnCounter.x = !turnCounter.x;
+  gameState.xTurnCounter = !gameState.xTurnCounter;
   // Return player for current turn
   return currentTurn;
 }
 
 var updateBoardSpace = id => {
-  boardSpaces[id] = !boardSpaces[id];
+  gameState.boardSpaces[id] = !gameState.boardSpaces[id];
 }
 
 var isBoardFull = () => {
-  for (var key in boardSpaces) {
-    if (boardSpaces[key]) {
+  for (var key in gameState.boardSpaces) {
+    if (gameState.boardSpaces[key]) {
       return false;
     }
   }
-  gameOver = true;
+  gameState.gameOver = true;
   return true;
 }
 
 var updateWinner = winner => {
   document.getElementById('user-alert').innerHTML = `${winner} won!`;
-  lastWinner = winner;
+  gameState.lastWinner = winner;
 }
 
 var updateScoreboard= winner => {
   winner = winner.toLowerCase();
-  scoreboard[winner] += 1;
-  document.getElementById(`${winner}-score`).innerHTML = scoreboard[winner];
+  gameState.scoreboard[winner] += 1;
+  document.getElementById(`${winner}-score`).innerHTML = gameState.scoreboard[winner];
 }
 
 var updateTie = () => {
@@ -94,21 +96,22 @@ var resetGameBoard = () => {
     gameBoard[i].innerHTML = null;
   }
   // Reset board and objs
-  if (lastWinner === 'X') {
-    turnCounter.x = true;
+  if (gameState.lastWinner === 'X') {
+    gameState.xTurnCounter = true;
   } else {
-    turnCounter.x = false;
+    gameState.xTurnCounter = false;
   }
 
-  gameOver = false;
+  gameState.gameOver = false;
+  gameState.winnerSet = false;
   document.getElementById('user-alert').innerHTML = null;
   resetBoardObj();
 }
 
 var resetBoardObj = () => {
-  for (var key in boardSpaces) {
-    if (!boardSpaces[key]) {
-      boardSpaces[key] = true;
+  for (var key in gameState.boardSpaces) {
+    if (!gameState.boardSpaces[key]) {
+      gameState.boardSpaces[key] = true;
     }
   }
 }
@@ -151,14 +154,14 @@ var rowChecker = board => {
         xCount++;
         // If the counter = 3, game over
         if (xCount === 3) {
-          gameOver = true;
+          gameState.gameOver = true;
           return 'X';
         }
       }
       if (board[r][c] === 'O') {
         oCount++;
         if (oCount === 3) {
-          gameOver = true;
+          gameState.gameOver = true;
           return 'O';
         }
       }
@@ -179,14 +182,14 @@ var colChecker = board => {
         xCount++;
         // If the counter = 3, game over
         if (xCount === 3) {
-          gameOver = true;
+          gameState.gameOver = true;
           return 'X';
         }
       }
       if (board[r][c] === 'O') {
         oCount++;
         if (oCount === 3) {
-          gameOver = true;
+          gameState.gameOver = true;
           return 'O';
         }
       }
@@ -203,14 +206,14 @@ var majorChecker = board => {
       xMajCount++;
       // If the counter = 3, game over
       if (xMajCount === 3) {
-        gameOver = true;
+        gameState.gameOver = true;
         return 'X';
       }
     }
     if (board[r][r] === 'O') {
       oMajCount++;
       if (oMajCount === 3) {
-        gameOver = true;
+        gameState.gameOver = true;
         return 'O';
       }
     }
@@ -226,14 +229,14 @@ var minorChecker = board => {
       xMinCount++;
       // If the counter = 3, game over
       if (xMinCount === 3) {
-        gameOver = true;
+        gameState.gameOver = true;
         return 'X';
       }
     }
     if (board[r][minIndex] === 'O') {
       oMinCount++;
       if (oMinCount === 3) {
-        gameOver = true;
+        gameState.gameOver = true;
         return 'O';
       }
     }
