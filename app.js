@@ -14,6 +14,7 @@ var boardSpaces = {
   botRight: true
 }
 var gameOver = false;
+var lastWinner = 'X';
 
 // Create function that updates tiles
 var addPiece = id => {
@@ -68,6 +69,7 @@ var isBoardFull = () => {
 
 var updateWinner = winner => {
   document.getElementById('user-alert').innerHTML = `${winner} won!`;
+  lastWinner = winner;
 }
 
 var updateTie = () => {
@@ -82,7 +84,12 @@ var resetGameBoard = () => {
     gameBoard[i].innerHTML = null;
   }
   // Reset board and objs
-  turnCounter.x = true;
+  if (lastWinner === 'X') {
+    turnCounter.x = true;
+  } else {
+    turnCounter.x = false;
+  }
+
   gameOver = false;
   document.getElementById('user-alert').innerHTML = null;
   resetBoardObj();
