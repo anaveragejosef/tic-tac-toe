@@ -1,0 +1,21 @@
+.game-board {
+  display: grid;
+  grid: repeat(3, 50px) / auto-flow 50px;
+  padding-top: 20px;
+}
+.tile {
+  font-weight: bold;
+  text-align: center;
+  padding-top: 15px;
+}
+.pattern1 {
+  background-color: grey;
+}
+.pattern2 {
+  background-color: wheat;
+}
+th {
+  border: solid;
+  border-color: black;
+  border-width: 1px;
+}
