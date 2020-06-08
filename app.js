@@ -14,10 +14,14 @@ var addPiece = id => {
   } else {
     alert('Invalid Move, Please Try Again');
   }
-  // Call winner checker if turn count >= 5
+  // Call winner checker to see if game is over
   var winner = checkForWinner();
   if (gameOver) {
     document.getElementById('user-alert').innerHTML = `${winner} won!`;
+  }
+  // Check if there are any further moves
+  if (!gameOver && turnCounter === 10) {
+    document.getElementById('user-alert').innerHTML = 'A strange game. The only winning move is not to play.';
   }
 };
 
