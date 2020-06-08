@@ -11,6 +11,8 @@ var addPiece = id => {
     // Tracker increments
     turnCounter++;
     // Call winner checker if turn count >= 5
+  } else {
+    alert('Invalid Move, Please Try Again');
   }
 };
 
@@ -19,7 +21,13 @@ var addPiece = id => {
 
 
 // TODO: Create function that resets game board
-  // Onclick function looking at restart button
-    // On click, iterate through tile divs
-      // Set inner htmls to ''
-    // Reset turn tracker to 1
+var resetGameBoard = () => {
+  var gameBoard = (document.getElementsByClassName('tile'));
+  // On click, iterate through tile divs
+  for (let i = 0; i < gameBoard.length; i++) {
+    // Set inner htmls to ''
+    gameBoard[i].innerHTML = null;
+  }
+  // Reset turn tracker to 1
+  turnCounter = 1;
+}

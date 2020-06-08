@@ -6,13 +6,19 @@
       .game-board {
         display: grid;
         grid: repeat(3, 50px) / auto-flow 50px;
+        padding-top: 20px;
+      }
+      .tile {
+        font-weight: bold;
+        text-align: center;
+        padding-top: 15px;
       }
     </style>
   </head>
   <body>
     <h1 style='text-align: center'>Shall We Play A Game?</h1>
-    <button class='restart'>Ready to Restart?</button>
-    <div style='padding-top: 20px' class='game-board'>
+    <button class='restart' onClick='resetGameBoard()'>Ready to Restart?</button>
+    <div class='game-board'>
       <div onClick='addPiece(id)' class='tile' id='topLeft' style='background-color: grey' ></div>
       <div onClick='addPiece(id)' class='tile' id='midLeft' style='background-color: wheat'></div>
       <div onClick='addPiece(id)' class='tile' id='botLeft' style='background-color: grey'></div>
