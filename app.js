@@ -1,29 +1,100 @@
 // Create variable to track turn
-var turnCounter = 1;
+var turnCounter = {
+  x: true
+};
+var boardSpaces = {
+  topLeft: true,
+  midLeft: true,
+  botLeft: true,
+  topCenter: true,
+  midCenter: true,
+  botCenter: true,
+  topRight: true,
+  midRight: true,
+  botRight: true
+}
 var gameOver = false;
 
 // Create function that updates tiles
 var addPiece = id => {
-  var inner = document.getElementById(id).innerHTML;
-  // Check if the tile has an inner html that is null
-  if (!inner && gameOver === false) {
-    // Change the div to the turn tracker (odd = X, even = 0)
-    turnCounter % 2 === 0 ? document.getElementById(id).innerHTML = 'O' : document.getElementById(id).innerHTML = 'X';
-    // Tracker increments
-    turnCounter++;
-  } else {
-    alert('Invalid Move, Please Try Again');
+  // Check if move is valid
+  if (boardSpaces[id] && !gameOver) {
+    // AddPiece then calls PlacePiece
+    placePiece(id);
+    updateBoardSpace(id);
   }
-  // Call winner checker to see if game is over
   var winner = checkForWinner();
-  if (gameOver) {
-    document.getElementById('user-alert').innerHTML = `${winner} won!`;
+  if (winner) {
+    updateWinner(winner);
   }
-  // Check if there are any further moves
-  if (!gameOver && turnCounter === 10) {
-    document.getElementById('user-alert').innerHTML = 'A strange game. The only winning move is not to play.';
+  if (isBoardFull()) {
+    updateTie();
   }
-};
+}
+
+var placePiece = id => {
+  // Find out who's turn it is
+  var player = calculateTurn();
+  // PlacePiece then adds X or O based on current turn
+  document.getElementById(id).innerHTML = player;
+}
+
+var calculateTurn = () => {
+  // Find who's turn it is, using the obj
+  if (turnCounter.x) {
+    var currentTurn = 'X';
+  } else {
+    var currentTurn = 'O';
+  }
+  // Switch the state so it will move turns
+  turnCounter.x = !turnCounter.x;
+  // Return player for current turn
+  return currentTurn;
+}
+
+var updateBoardSpace = id => {
+  boardSpaces[id] = !boardSpaces[id];
+}
+
+var isBoardFull = () => {
+  for (var key in boardSpaces) {
+    if (boardSpaces[key]) {
+      return false;
+    }
+  }
+  gameOver = true;
+  return true;
+}
+
+var updateWinner = winner => {
+  document.getElementById('user-alert').innerHTML = `${winner} won!`;
+}
+
+var updateTie = () => {
+  document.getElementById('user-alert').innerHTML = 'A strange game. The only winning move is not to play.';
+}
+
+var resetGameBoard = () => {
+  var gameBoard = document.getElementsByClassName('tile');
+  // On click, iterate through tile divs
+  for (let i = 0; i < gameBoard.length; i++) {
+    // Set inner htmls to ''
+    gameBoard[i].innerHTML = null;
+  }
+  // Reset board and objs
+  turnCounter.x = true;
+  gameOver = false;
+  document.getElementById('user-alert').innerHTML = null;
+  resetBoardObj();
+}
+
+var resetBoardObj = () => {
+  for (var key in boardSpaces) {
+    if (!boardSpaces[key]) {
+      boardSpaces[key] = true;
+    }
+  }
+}
 
 // TODO: Create function that checks for winner
   // TODO: Create possible winning board arrays
@@ -130,19 +201,4 @@ var checkForWinner = () => {
       }
     }
   }
-}
-
-
-// Create function that resets game board
-var resetGameBoard = () => {
-  var gameBoard = document.getElementsByClassName('tile');
-  // On click, iterate through tile divs
-  for (let i = 0; i < gameBoard.length; i++) {
-    // Set inner htmls to ''
-    gameBoard[i].innerHTML = null;
-  }
-  // Reset turn tracker to 1
-  turnCounter = 1;
-  gameOver = false;
-  document.getElementById('user-alert').innerHTML = null;
 }
