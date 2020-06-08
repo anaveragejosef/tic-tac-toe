@@ -105,6 +105,23 @@ var checkForWinner = () => {
   var botRow = [gameBoard[2].innerHTML, gameBoard[5].innerHTML, gameBoard[8].innerHTML];
   var board = [topRow, midRow, botRow];
   // Row Check
+  var winner = rowChecker(board);
+  if (winner) return winner;
+
+  // Column Check
+  winner = colChecker(board);
+  if (winner) return winner;
+
+  // Check major/minor diagonal
+  winner = majorChecker(board);
+  if (winner) return winner;
+
+  // Check for minor diagonal
+  winner = minorChecker(board);
+  if (winner) return winner;
+}
+
+var rowChecker = board => {
   // Iterate through each row
   for (let r = 0; r < board.length; r++) {
     // Create X and O counter
@@ -130,9 +147,10 @@ var checkForWinner = () => {
       }
     }
   }
+}
 
-  // Column Check
-  // Iterate through each col
+// Iterate through each col
+var colChecker = board => {
   for (let c = 0; c < board.length; c++) {
     // Create X and O counter
     var xCount = 0;
@@ -157,8 +175,9 @@ var checkForWinner = () => {
       }
     }
   }
+}
 
-  // Check major/minor diagonal
+var majorChecker = board => {
   // Check major diagonal
   var xMajCount = 0;
   var oMajCount = 0;
@@ -179,8 +198,9 @@ var checkForWinner = () => {
       }
     }
   }
+}
 
-  // Check for minor diagonal
+var minorChecker = board => {
   var xMinCount = 0;
   var oMinCount = 0;
   for (let r = 0; r < board.length; r++) {
