@@ -13,6 +13,10 @@ var boardSpaces = {
   midRight: true,
   botRight: true
 }
+var scoreboard = {
+  x: 0,
+  o: 0
+}
 var gameOver = false;
 var lastWinner = 'X';
 
@@ -27,8 +31,8 @@ var addPiece = id => {
   var winner = checkForWinner();
   if (winner) {
     updateWinner(winner);
-  }
-  if (isBoardFull()) {
+    updateScoreboard(winner);
+  } else if (isBoardFull()) {
     updateTie();
   }
 }
@@ -70,6 +74,12 @@ var isBoardFull = () => {
 var updateWinner = winner => {
   document.getElementById('user-alert').innerHTML = `${winner} won!`;
   lastWinner = winner;
+}
+
+var updateScoreboard= winner => {
+  winner = winner.toLowerCase();
+  scoreboard[winner] += 1;
+  document.getElementById(`${winner}-score`).innerHTML = scoreboard[winner];
 }
 
 var updateTie = () => {
