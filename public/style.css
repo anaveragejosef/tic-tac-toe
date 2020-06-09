@@ -1,7 +1,8 @@
 .game-board {
   display: grid;
   grid: repeat(3, 50px) / auto-flow 50px;
-  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-left: 50px;
 }
 .tile {
   font-weight: bold;
@@ -18,4 +19,8 @@ th {
   border: solid;
   border-color: black;
   border-width: 1px;
+}
+.scoreboard {
+  float: right;
+  margin-right: 50px;
 }
