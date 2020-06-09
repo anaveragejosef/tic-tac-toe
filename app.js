@@ -1,4 +1,4 @@
-// Create variable to track turn
+// Create Game State Obj
 var gameState = {
   xTurnCounter: true,
   boardSpaces: {
@@ -34,7 +34,7 @@ var addPiece = id => {
     updateWinner(winner);
     updateScoreboard(winner);
     gameState.winnerSet = true;
-  } else if (isBoardFull()) {
+  } else if (isBoardFull() && !gameState.winnerSet) {
     updateTie();
   }
 }
